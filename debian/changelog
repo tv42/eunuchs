@@ -1,3 +1,10 @@
+eunuchs (20030419.1) unstable; urgency=low
+
+  * Change Build-Depends-Indep to Build-Depends. Stupid cut-paste
+    error. (closes: #188012)
+
+ -- Tommi Virtanen <tv@debian.org>  Sat, 19 Apr 2003 18:37:21 +0300
+
 eunuchs (20030325.1) unstable; urgency=low
 
   * Initial Release.
