@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-#debian-section: devel
+#debian-section: python
 
 from distutils.core import setup, Extension
 

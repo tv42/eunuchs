@@ -1,3 +1,10 @@
+eunuchs (20030809.1) unstable; urgency=low
+
+  * Python 2.3 is now the default.
+  * Fix Build-Depends and Section the Right Way.
+
+ -- Tommi Virtanen <tv@debian.org>  Sat,  9 Aug 2003 14:49:17 +0300
+
 eunuchs (20030531.1) unstable; urgency=low
 
   * Add tuntap support.
