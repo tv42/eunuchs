@@ -1,3 +1,14 @@
+eunuchs (20030429.1) unstable; urgency=low
+
+  * Change Debian section to python.
+  * Remove a cut-paste silliness that seemed to trigger gcc
+    errors. (But only on sparc. Weird.) (closes: #190431)
+  * Don't bother printing file names with find when not using
+    xargs.
+  * Add socketpair(2).
+
+ -- Tommi Virtanen <tv@debian.org>  Tue, 29 Apr 2003 20:34:53 +0300
+
 eunuchs (20030419.1) unstable; urgency=low
 
   * Change Build-Depends-Indep to Build-Depends. Stupid cut-paste

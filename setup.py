@@ -23,6 +23,8 @@ Current list of functions included:
 
 - recvmsg(2) and sendmsg(2), including use of cmsg(3)
 
+- socketpair(2)
+
 """.strip(),
 	  author="Tommi Virtanen",
 	  author_email="tv@debian.org",
@@ -36,5 +38,6 @@ Current list of functions included:
           ext_package="eunuchs",
           ext_modules=[Extension(module, ["lib/eunuchs/%s.c" % module],
                                  extra_compile_args=['-Werror'])
-                       for module in ('fchdir', 'recvmsg', 'sendmsg')],
+                       for module in ('fchdir', 'recvmsg', 'sendmsg',
+                                      'socketpair')],
 	  )

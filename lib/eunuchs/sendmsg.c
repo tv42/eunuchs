@@ -122,7 +122,6 @@ static PyObject *my_sendmsg(PyObject *self, PyObject *args, PyObject *keywds) {
     msg.msg_controllen = real_controllen;
   }
 
-  inet_ntoa(sa.sin_addr), ntohs(sa.sin_port),
   ret = sendmsg(fd, &msg, flags);
   if (ret<0) {
     PyErr_SetFromErrno(PyExc_OSError);

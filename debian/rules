@@ -65,7 +65,7 @@ install-python-%:
 		'$(call docdir,python$*-eunuchs)/changelog'
 	gzip -9f \
 		'$(call docdir,python$*-eunuchs)/changelog'
-	find examples -name SCCS -prune -o -type f -print0 -exec \
+	find examples -name SCCS -prune -o -type f -exec \
 		install -D -m0644 '{}' '$(call docdir,python$*-eunuchs)/{}' \;
 
 binary-arch-python-%: install-python-%
