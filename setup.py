@@ -39,5 +39,5 @@ Current list of functions included:
           ext_modules=[Extension(module, ["lib/eunuchs/%s.c" % module],
                                  extra_compile_args=['-Werror'])
                        for module in ('fchdir', 'recvmsg', 'sendmsg',
-                                      'socketpair')],
+                                      'socketpair', '_tuntap')],
 	  )

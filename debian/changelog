@@ -1,3 +1,9 @@
+eunuchs (20030531.1) unstable; urgency=low
+
+  * Add tuntap support.
+
+ -- Tommi Virtanen <tv@debian.org>  Sat, 31 May 2003 15:04:45 +0300
+
 eunuchs (20030429.1) unstable; urgency=low
 
   * Change Debian section to python.
