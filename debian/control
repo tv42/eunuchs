@@ -3,13 +3,13 @@ Section: python
 Priority: optional
 Maintainer: Tommi Virtanen <tv@debian.org>
 Standards-Version: 3.5.6
-Build-Depends: python2.2-dev, python2.3-dev, debhelper (>= 4.1.68), python, cdbs (>= 0.4.0.1)
+Build-Depends: python2.3-dev, python2.4-dev, debhelper (>= 4.1.68), python, cdbs (>= 0.4.0.1)
 
 Package: python-eunuchs
 Architecture: all
-Depends: ${python:Depends}, python-twisted, pwgen
+Depends: ${python:Depends}
 Description: Missing manly parts of UNIX API for Python
- Eunuchs is a library of Python extension that complement the standard
+ Eunuchs is a library of Python extensions that complement the standard
  libraries in parts where full support for the UNIX API (or the Linux
  API) is missing.
  .
@@ -17,44 +17,22 @@ Description: Missing manly parts of UNIX API for Python
  absolutely necessary functions for real systems programming. The aim is
  to have the functions added to mainstream Python libraries.
  .
- Current list of functions included:
- .
- - fchdir(2)
+ Current list of features included:
  .
  - recvmsg(2) and sendmsg(2), including use of cmsg(3)
  .
  - socketpair(2)
+ .
+ - support for TUN/TAP virtual network interfaces
  .
  This is a dummy package that depends on the correct version of
  python-eunuchs for the default version of Python.
 
-Package: python2.2-eunuchs
-Architecture: any
-Depends: ${python:Depends}, python2.2-twisted, pwgen
-Description: Missing manly parts of UNIX API for Python
- Eunuchs is a library of Python extension that complement the standard
- libraries in parts where full support for the UNIX API (or the Linux
- API) is missing.
- .
- Most of the functions wrapped by Eunuchs are low-level, dirty, but
- absolutely necessary functions for real systems programming. The aim is
- to have the functions added to mainstream Python libraries.
- .
- Current list of functions included:
- .
- - fchdir(2)
- .
- - recvmsg(2) and sendmsg(2), including use of cmsg(3)
- .
- - socketpair(2)
- .
- This version is usable with python2.2
-
 Package: python2.3-eunuchs
 Architecture: any
-Depends: ${python:Depends}, python2.3-twisted, pwgen
+Depends: ${python:Depends}
 Description: Missing manly parts of UNIX API for Python
- Eunuchs is a library of Python extension that complement the standard
+ Eunuchs is a library of Python extensions that complement the standard
  libraries in parts where full support for the UNIX API (or the Linux
  API) is missing.
  .
@@ -62,13 +40,35 @@ Description: Missing manly parts of UNIX API for Python
  absolutely necessary functions for real systems programming. The aim is
  to have the functions added to mainstream Python libraries.
  .
- Current list of functions included:
- .
- - fchdir(2)
+ Current list of features included:
  .
  - recvmsg(2) and sendmsg(2), including use of cmsg(3)
  .
  - socketpair(2)
  .
+ - support for TUN/TAP virtual network interfaces
+ .
  This version is usable with python2.3
+
+Package: python2.4-eunuchs
+Architecture: any
+Depends: ${python:Depends}
+Description: Missing manly parts of UNIX API for Python
+ Eunuchs is a library of Python extensions that complement the standard
+ libraries in parts where full support for the UNIX API (or the Linux
+ API) is missing.
+ .
+ Most of the functions wrapped by Eunuchs are low-level, dirty, but
+ absolutely necessary functions for real systems programming. The aim is
+ to have the functions added to mainstream Python libraries.
+ .
+ Current list of features included:
+ .
+ - recvmsg(2) and sendmsg(2), including use of cmsg(3)
+ .
+ - socketpair(2)
+ .
+ - support for TUN/TAP virtual network interfaces
+ .
+ This version is usable with python2.4
 

@@ -2,7 +2,7 @@
 import os, os.path, commands
 import formatter, StringIO
 
-PYTHON_VERSIONS=['2.2', '2.3']
+PYTHON_VERSIONS=['2.3', '2.4']
 
 def reflow(s):
     out=StringIO.StringIO()
@@ -72,7 +72,7 @@ class CmdDict:
 pypackage = """
 Package: %(var package)s
 Architecture: %(var arch)s
-Depends: ${python:Depends}, python%(var python_version)s-twisted, pwgen
+Depends: ${python:Depends}
 Description: %(setup --description)s
 """
 

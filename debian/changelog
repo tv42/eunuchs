@@ -1,3 +1,14 @@
+eunuchs (20050320.1) unstable; urgency=low
+
+  * Drop copy-paste error dependencies on pwgen and twisted.
+  * Drop support for python2.2 (Closes: #266434).
+  * Include support for python2.4.
+  * Remove eunuchs.fchdir (leave a stub that uses os.fchdir()), it is
+    included in python2.3 and above.
+  * Fix typo in setup.py (and thus in debian/control Description: fields)
+
+ -- Tommi Virtanen <tv@debian.org>  Sun, 20 Mar 2005 14:53:47 +0200
+
 eunuchs (20030824.1) unstable; urgency=low
 
   * Ignore generated files.

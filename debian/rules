@@ -5,7 +5,9 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/python-distutils.mk
 
 binary-post-install/%::
-	find examples -mindepth 1 -maxdepth 1 -name SCCS -prune -o -print0 | xargs -0 dh_installexamples -p$(cdbs_curpkg)
+	find examples -mindepth 1 -maxdepth 1 -print0 | xargs -0 dh_installexamples -p$(cdbs_curpkg)
 
 clean::
-	rm -rf _trial_temp
+	# distutils is sloppy and only cleans with the default python version,
+	# leaving all the other stuff still in build
+	rm -rf build
