@@ -3,11 +3,11 @@ Section: python
 Priority: optional
 Maintainer: Tommi Virtanen <tv@debian.org>
 Standards-Version: 3.5.6
-Build-Depends: python2.2-dev, python2.3-dev
+Build-Depends: python2.2-dev, python2.3-dev, debhelper (>= 4.1.68), python, cdbs (>= 0.4.0.1)
 
 Package: python-eunuchs
 Architecture: all
-Depends: python, python-twisted, pwgen, python2.3-eunuchs
+Depends: ${python:Depends}, python-twisted, pwgen
 Description: Missing manly parts of UNIX API for Python
  Eunuchs is a library of Python extension that complement the standard
  libraries in parts where full support for the UNIX API (or the Linux
@@ -30,7 +30,7 @@ Description: Missing manly parts of UNIX API for Python
 
 Package: python2.2-eunuchs
 Architecture: any
-Depends: python2.2, python2.2-twisted, pwgen
+Depends: ${python:Depends}, python2.2-twisted, pwgen
 Description: Missing manly parts of UNIX API for Python
  Eunuchs is a library of Python extension that complement the standard
  libraries in parts where full support for the UNIX API (or the Linux
@@ -52,7 +52,7 @@ Description: Missing manly parts of UNIX API for Python
 
 Package: python2.3-eunuchs
 Architecture: any
-Depends: python2.3, python2.3-twisted, pwgen
+Depends: ${python:Depends}, python2.3-twisted, pwgen
 Description: Missing manly parts of UNIX API for Python
  Eunuchs is a library of Python extension that complement the standard
  libraries in parts where full support for the UNIX API (or the Linux

@@ -1,3 +1,11 @@
+eunuchs (20030824.1) unstable; urgency=low
+
+  * Ignore generated files.
+  * Use cdbs and debhelper, this should make us follow python
+    policy more closely (Closes: #205435).
+
+ -- Tommi Virtanen <tv@debian.org>  Sun, 24 Aug 2003 19:21:57 +0300
+
 eunuchs (20030809.1) unstable; urgency=low
 
   * Python 2.3 is now the default.

@@ -1,82 +1,11 @@
 #!/usr/bin/make -f
+# -*- mode: makefile; coding: utf-8 -*-
 
-PYTHON_VERSIONS:=2.2 2.3
-PYTHON_VERSION_DEFAULT:=2.3
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/python-distutils.mk
 
-docdir=debian/install/$(1)/usr/share/doc/$(1)
+binary-post-install/%::
+	find examples -mindepth 1 -maxdepth 1 -name SCCS -prune -o -print0 | xargs -0 dh_installexamples -p$(cdbs_curpkg)
 
-build:
-install: $(foreach p,$(PYTHON_VERSIONS),install-python-$(p))
-binary: binary-indep binary-arch
-binary-indep: binary-indep-dummy
-binary-arch: $(foreach p,$(PYTHON_VERSIONS),binary-arch-python-$(p))
-
-clean:
-	test -e debian/control
-	test root = "`whoami`" || (echo need root priviledges; exit 1)
-	rm -rf build debian/install
-	find . -type f -name '*.pyc' -print0 \
-	| xargs -0 --no-run-if-empty rm --
-	rm -rf debian/substvars debian/files
-
-
-
-DUMMY_INSTDIR:=debian/install/python-eunuchs
-binary-indep-dummy:
-	test -e debian/control
-	test root = "`whoami`" || (echo need root priviledges; exit 1)
-
-	install -d --mode=0755 \
-		'$(DUMMY_INSTDIR)/DEBIAN' \
-		'$(call docdir,python-eunuchs)'
-	install --mode=0644 \
-		debian/copyright \
-		'$(call docdir,python-eunuchs)'
-	install --mode=0644 \
-		debian/changelog \
-		'$(call docdir,python-eunuchs)/changelog'
-	install --mode=0644 \
-		debian/README.Debian.dummy \
-		'$(call docdir,python-eunuchs)/README.Debian'
-	gzip -9f \
-		'$(call docdir,python-eunuchs)/README.Debian' \
-		'$(call docdir,python-eunuchs)/changelog'
-	dpkg-gencontrol -isp -p'python-eunuchs' -P'$(DUMMY_INSTDIR)'
-	dpkg --build '$(DUMMY_INSTDIR)' ..
-
-
-install-python-%:
-	test -e debian/control
-	test root = "`whoami`" || (echo need root priviledges; exit 1)
-	rm -rf debian/substvars
-	install -d -m0755 'debian/install/python$*-eunuchs'
-	/usr/bin/python$* setup.py install --root='debian/install/python$*-eunuchs'
-	find 'debian/install/python$*-eunuchs/usr/lib' -name '*.so' \
-		-exec strip --strip-unneeded '{}' ';'
-	rm -rf build
-	chmod -R go-w 'debian/install/python$*-eunuchs'
-
-	install -d --mode=0755 '$(call docdir,python$*-eunuchs)'
-	install --mode=0644 \
-		debian/copyright \
-		'$(call docdir,python$*-eunuchs)'
-	install --mode=0644 \
-		debian/changelog \
-		'$(call docdir,python$*-eunuchs)/changelog'
-	gzip -9f \
-		'$(call docdir,python$*-eunuchs)/changelog'
-	find examples -name SCCS -prune -o -type f -exec \
-		install -D -m0644 '{}' '$(call docdir,python$*-eunuchs)/{}' \;
-
-binary-arch-python-%: install-python-%
-	test -e debian/control
-	test root = "`whoami`" || (echo need root priviledges; exit 1)
-
-	install -d --mode=0755 'debian/install/python$*-eunuchs/DEBIAN'
-	dpkg-gencontrol \
-		-isp -p'python$*-eunuchs' -P'debian/install/python$*-eunuchs'
-	dpkg --build 'debian/install/python$*-eunuchs' ..
-
-.PHONY: build clean binary-indep binary-arch binary \
-	binary-indep-dummy \
-	binary-arch-python-% install-python-%
+clean::
+	rm -rf _trial_temp
