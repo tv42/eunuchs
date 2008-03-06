@@ -1,0 +1,19 @@
+*.py[co]
+*.egg-info
+/stage
+/.pydoctor.pickle
+/apidocs
+/.coverage
+/_trial_temp
+
+# debianization
+/debian/control
+/debian/files
+/debian/*.substvars
+/debian/*.debhelper
+/debian/python-eunuchs
+/debian/python2.3-eunuchs
+/debian/python2.4-eunuchs
+/build
+/dist
+/python-build-stamp-*
