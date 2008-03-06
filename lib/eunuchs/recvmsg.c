@@ -13,7 +13,7 @@ static PyObject *my_recvmsg(PyObject *self, PyObject *args, PyObject *keywds) {
   size_t maxsize=8192;
   int ret;
   struct msghdr msg;
-  struct sockaddr_in sa;
+  struct sockaddr_in sa = {0};
   struct iovec iov[1];
   char cmsgbuf[CMSG_BUFSIZE];
   PyObject *ancillary;
