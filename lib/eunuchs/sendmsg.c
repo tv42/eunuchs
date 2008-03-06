@@ -11,13 +11,13 @@ static PyObject *my_sendmsg(PyObject *self, PyObject *args, PyObject *keywds) {
   int fd;
   int flags=0;
   int ret;
-  struct msghdr msg;
+  struct msghdr msg = {0};
   struct sockaddr_in sa;
   struct iovec iov[1];
   char cmsgbuf[CMSG_BUFSIZE];
   PyObject *ancillary = NULL;
-  char *host;
-  int port;
+  char *host = NULL;
+  int port = 0;
 
   static char *kwlist[] = {"fd",
 			   "data",
@@ -26,7 +26,7 @@ static PyObject *my_sendmsg(PyObject *self, PyObject *args, PyObject *keywds) {
 			   "ancillary",
 			   NULL};
 
-  if (!PyArg_ParseTupleAndKeywords(args, keywds, "it#si|iO", kwlist,
+  if (!PyArg_ParseTupleAndKeywords(args, keywds, "it#|siiO", kwlist,
 				   &fd,
 				   &iov[0].iov_base,
 				   &iov[0].iov_len,
@@ -36,19 +36,22 @@ static PyObject *my_sendmsg(PyObject *self, PyObject *args, PyObject *keywds) {
 				   &ancillary))
     return NULL;
 
-  memset(&sa, 0, sizeof(sa));
-  sa.sin_family = AF_INET;
-  sa.sin_port = htons(port);
-  {
-    int address_valid;
+  if (host || port) {
+    memset(&sa, 0, sizeof(sa));
+    sa.sin_family = AF_INET;
+    sa.sin_port = htons(port);
 
-    address_valid = inet_aton(host, &sa.sin_addr);
-    if (!address_valid)
-      return NULL;
+    if (host) {
+      int address_valid;
+
+      address_valid = inet_aton(host, &sa.sin_addr);
+      if (!address_valid)
+	return NULL;
+    }
+
+    msg.msg_name = &sa;
+    msg.msg_namelen = sizeof(sa);
   }
-
-  msg.msg_name = &sa;
-  msg.msg_namelen = sizeof(sa);
 
   msg.msg_iov = iov;
   msg.msg_iovlen = 1;
