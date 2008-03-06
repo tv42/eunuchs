@@ -101,7 +101,7 @@ static PyObject *my_sendmsg(PyObject *self, PyObject *args, PyObject *keywds) {
 	real_controllen += CMSG_SPACE(sizeof *info);
       } else {
 	char *data;
-	int len;
+	ssize_t len;
 
 	if (PyString_AsStringAndSize(rest, &data, &len))
 	  return NULL; // TODO leaks
