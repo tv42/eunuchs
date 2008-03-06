@@ -18,10 +18,14 @@ static PyObject *my_recvmsg(PyObject *self, PyObject *args, PyObject *keywds) {
   char cmsgbuf[CMSG_BUFSIZE];
   PyObject *ancillary;
 
-  static char *kwlist[] = {"fd", "flags", "maxsize", NULL};
+  static char *kwlist[] = {"fd", "flags", "maxsize", "ancillary", NULL};
 
-  if (!PyArg_ParseTupleAndKeywords(args, keywds, "i|ii", kwlist,
-				   &fd, &flags, &maxsize))
+  if (!PyArg_ParseTupleAndKeywords(args, keywds, "i|iiO", kwlist,
+				   &fd,
+				   &flags,
+				   &maxsize,
+				   &ancillary
+				   ))
     return NULL;
 
   msg.msg_name = &sa;
@@ -39,6 +43,53 @@ static PyObject *my_recvmsg(PyObject *self, PyObject *args, PyObject *keywds) {
   memset(cmsgbuf, 0, sizeof(cmsgbuf));
   msg.msg_control = cmsgbuf;
   msg.msg_controllen = sizeof(cmsgbuf);
+
+  if (ancillary) {
+    struct cmsghdr *cur;
+    size_t real_controllen = 0;
+    PyObject *iterator;
+    PyObject *item;
+
+    msg.msg_controllen = sizeof(cmsgbuf);
+    cur = CMSG_FIRSTHDR(&msg);
+
+    iterator = PyObject_GetIter(ancillary);
+    if (!iterator)
+      return NULL; // TODO proper error?
+
+    while ((item = PyIter_Next(iterator))) {
+      PyObject *rest;
+
+      if (!cur)
+	return NULL; // TODO proper error, leaks
+
+      if (!PyArg_ParseTuple(item, "iiO",
+			    &cur->cmsg_level,
+			    &cur->cmsg_type,
+			    &rest))
+	return NULL; // TODO leaks
+
+      {
+	char *data;
+	ssize_t len;
+
+	if (PyString_AsStringAndSize(rest, &data, &len))
+	  return NULL; // TODO leaks
+
+	memcpy(CMSG_DATA(cur), data, len);
+	cur->cmsg_len = CMSG_LEN(len);
+	real_controllen += CMSG_SPACE(len);
+      }
+      cur = CMSG_NXTHDR(&msg, cur);
+      Py_DECREF(item);
+    }
+    Py_DECREF(iterator);
+
+    if (PyErr_Occurred())
+      return NULL;
+
+    msg.msg_controllen = real_controllen;
+  }
 
   ret = recvmsg(fd, &msg, flags);
   if (ret<0) {

@@ -38,5 +38,6 @@ Current list of features included:
           ext_modules=[Extension(module, ["lib/eunuchs/%s.c" % module],
                                  extra_compile_args=['-Werror'])
                        for module in ('recvmsg', 'sendmsg',
-                                      'socketpair', '_tuntap')],
+                                      'socketpair', '_tuntap',
+                                      'socket_const')],
 	  )
