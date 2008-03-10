@@ -131,8 +131,7 @@ static PyObject *my_sendmsg(PyObject *self, PyObject *args, PyObject *keywds) {
     return NULL;
   }
 
-  Py_INCREF(Py_None);
-  return Py_None;
+  return PyInt_FromLong(ret);
 }
 
 static PyMethodDef my_methods[] = {

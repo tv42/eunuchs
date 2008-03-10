@@ -67,7 +67,7 @@ def send_fds(sock, fds, data='\n'):
     """
     if not isinstance(sock, int):
         sock = sock.fileno()
-    sendmsg(
+    return sendmsg(
         fd=sock,
         data=data,
         ancillary=[
