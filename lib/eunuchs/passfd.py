@@ -42,10 +42,10 @@ def receive_fds(sock, num=1, size=1):
         )
 
     fds = None
-    for (level, type_, data) in ancillary:
+    for (level, type_, buf) in ancillary:
         if (level == SOL_SOCKET
             and type_ == SCM_RIGHTS):
-            fds = array.array('i', data)
+            fds = array.array('i', buf)
 
     return (data, fds)
 
